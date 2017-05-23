@@ -10,4 +10,4 @@ Software packages that'll be installed can be seen under "Software Packages".
 ## Software Packages
 
 ## Install on fresh system
-```apt -qq install curl && /bin/bash <(curl -s "https://raw.githubusercontent.com/pbrln/devsuite-ubuntu/master/dev-suite.sh"```
+```apt -qq install curl && /bin/bash <(curl -s "https://raw.githubusercontent.com/pbrln/devsuite-ubuntu/master/dev-suite.sh")```

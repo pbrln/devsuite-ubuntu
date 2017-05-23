@@ -7,6 +7,10 @@ function installAll {
     echo "Installing all tools"
 }
 
+function installNode {
+    #Add Node to source repos
+}
+
 function installIndividual {
     echo "Prompt for each"
 }
