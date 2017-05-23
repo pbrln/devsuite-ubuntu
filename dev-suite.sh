@@ -10,7 +10,7 @@ function installAll {
 function installIndividual {
     echo "Prompt for each"
 }
-
+printf "\033c"
 echo "Ubuntu Development Suite Installer"
 echo "The following software and all of it's dependencies will be installed:"
 echo "- NodeJS, NPM, NVM"
