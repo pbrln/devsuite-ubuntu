@@ -4,11 +4,19 @@
 # License: MIT
 
 function installAll {
+	installGit
     installNode
     installVSCode
     installPython
     installMakeTools
     installBuildEssential
+	installZshWithZim
+}
+
+function installGit {
+    printf "Installing GIT"
+    apt-get install -y git > /dev/null
+    echo " [DONE]"
 }
 
 function installNode {
@@ -64,39 +72,64 @@ function installBuildEssential {
     echo " [DONE]"
 }
 
+function installZshWithZim {
+    printf "Installing zsh"
+	apt-get install zsh -y > /dev/null
+	chsh -s /usr/bin/zsh > /dev/null
+    echo " [DONE]"
+	printf "Installing zim"
+    git clone --recursive https://github.com/Eriner/zim.git ${ZDOTDIR:-${HOME}}/.zim
+	setopt EXTENDED_GLOB
+	for template_file ( ${ZDOTDIR:-${HOME}}/.zim/templates/* ); do
+	  user_file="${ZDOTDIR:-${HOME}}/.${template_file:t}"
+	  touch ${user_file}
+	  ( print -rn "$(<${template_file})$(<${user_file})" >! ${user_file} ) 2>/dev/null
+	done
+	source ${ZDOTDIR:-${HOME}}/.zlogin
+	echo " [DONE]"
+}
+
 function installIndividual {
+	installGit
     while true; do
         read -p "Do you wish to install NodeJS? [Y/n] " installYN
-        case $installAll in
-            [Yy]* ) installNode; break;;
+        case $installYN in
+            [Yy]* ) installGit; break;;
             [Nn]* ) break;;
         esac
     done
     while true; do
         read -p "Do you wish to install Visual Studio Code? [Y/n] " installYN
-        case $installAll in
+        case $installYN in
             [Yy]* ) installVSCode; break;;
             [Nn]* ) break;;
         esac
     done
     while true; do
         read -p "Do you wish to install python? [Y/n] " installYN
-        case $installAll in
+        case $installYN in
             [Yy]* ) installPython; break;;
             [Nn]* ) break;;
         esac
     done
     while true; do
         read -p "Do you wish to install make, cmake, g++? [Y/n] " installYN
-        case $installAll in
+        case $installYN in
             [Yy]* ) installMakeTools; break;;
             [Nn]* ) break;;
         esac
     done
     while true; do
         read -p "Do you wish to install build-essential? [Y/n] " installYN
-        case $installAll in
+        case $installYN in
             [Yy]* ) installBuildEssential; break;;
+            [Nn]* ) break;;
+        esac
+    done
+    while true; do
+        read -p "Do you wish to install zsh with zim? [Y/n] " installYN
+        case $installYN in
+            [Yy]* ) installZshWithZim; break;;
             [Nn]* ) break;;
         esac
     done
@@ -104,11 +137,13 @@ function installIndividual {
 printf "\033c"
 echo "Ubuntu Development Suite Installer"
 echo "The following software and all of it's dependencies will be installed:"
-echo "- NodeJS, NPM, NVM"
+echo "- GIT"
+echo "- NodeJS, Yarn"
 echo "- Visual Studio Code"
 echo "- python"
 echo "- make, cmake, g++"
 echo "- build-essential"
+echo "- zsh with zim"
 while true; do
     read -p "Do you wish to install the whole package? Otherwise you'll be asked for each package. [Y/n] " installAll
     case $installAll in
