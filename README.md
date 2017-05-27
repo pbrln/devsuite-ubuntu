@@ -14,7 +14,7 @@ Software packages that'll be installed can be seen under "Software Packages".
 - python
 - make, cmake, g++
 - build-essential
-- zsh with zim
+- zsh
 
 ## Install on fresh system
 ```apt -qq install curl && /bin/bash <(curl -s "https://raw.githubusercontent.com/pbrln/devsuite-ubuntu/master/dev-suite.sh")```
