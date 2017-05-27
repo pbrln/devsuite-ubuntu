@@ -19,6 +19,15 @@ function installNode {
     printf "Installing NodeJS"
     apt-get install -y nodejs > /dev/null
     echo " [DONE]"
+    
+    printf "Adding Yarn repository"
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - > /dev/null
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list > /dev/null
+    echo " [DONE]"
+
+    printf "Installing Yarn"
+    apt-get update && apt-get install yarn
+    echo " [DONE]"
     #printf "Installing NPM"
     #apt-get install -y npm > /dev/null
     #echo " [DONE]"
@@ -44,9 +53,8 @@ function installPython {
 
 function installMakeTools {
     printf "Installing make, cmake, g++"
-    apt-get install make > /dev/null
-    apt-get install cmake > /dev/null
-    apt-get install g++ > /dev/null
+    apt-get install cmake -y > /dev/null
+    apt-get install g++ -y > /dev/null
     echo " [DONE]"
 }
 
